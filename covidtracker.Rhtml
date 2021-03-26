@@ -18,5 +18,36 @@ end.rcode-->
 #plot(cars)
 end.rcode-->
 
+<p> Reference Code  </p>
+<!--begin.rcode
+#taxi_zones2 <- read_csv("taxi+_zone_lookup.csv")
+
+#payments_join <- payment %>%
+  #inner_join(taxi_zones2, by=c("PULocationID" = "LocationID"))
+
+#tip_by_borough <- payments_join %>%
+ # group_by(Borough)%>%
+ # summarize(
+ #   N = n(),
+ #   average = mean(tip_percent)
+ # )
+
+#url <- "https://data.cityofnewyork.us/api/geospatial/tqmj-j8zm?method=export&format=Shapefile"
+#local_file <- basename(url)
+#download.file(url, destfile = local_file)
+#unzip(local_file, exdir = "taxi_zone_bounds2")
+
+#library(sf)
+#dsn2 <- path.expand("taxi_zone_bounds2")
+#dsn2
+#list.files(dsn2)
+
+#taxi_zone_look <- read_sf(dsn2)
+
+#taxi_w_tip <- taxi_zone_look %>%
+  #left_join(tip_by_borough, by=c("boro_name"="Borough"))
+end.rcode-->
+
+
 </body>
 </html>
