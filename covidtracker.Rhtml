@@ -90,14 +90,11 @@ end.rcode-->
 
   by_vaccine <- ggplot(vaccinations3_longer, aes(fill=vaccine, y=count, x= vaccine)) +   
    geom_bar(position="dodge", stat="identity")+
-   facet_wrap(~`State/Territory/Federal Entity`)
+   facet_wrap(~`State/Territory/Federal Entity`)+
+  theme(legend.position="top")
 
-# %>%
-# plotly::plot_ly(x = ~`State/Territory/Federal Entity`, y = ~ count, color = ~vaccine, type = "bar", textposition = "auto", textfont = list(color = 'rgb(0,0,0)'))
-
-#text = by_vaccine_2$vaccine,
  plot(by_vaccine)
-#plot(by_vaccine_2)
+
 end.rcode-->
 
 <!--begin.rcode
