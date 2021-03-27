@@ -8,15 +8,80 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(tidyverse)
+library(sds192)
+library(sf)
+library(dplyr)
+library(macleish)
+library(leaflet)
+library(lwgeom)
+library(htmltools)
+library(htmlwidgets)
+library(ggplot2)
+library(RColorBrewer)
+library(ggthemes)
+library(plotly)
 ```
 
+```{r data-extraction}
+vaccinations <- read_csv("covid19_vaccinations_in_the_united_states.csv")
+cases_deaths_bystate <- read.csv(
+  "united_states_covid19_cases_and_deaths_by_state.csv")
+state_mandates <- read.csv ("USstatesCov19distancingpolicy.csv")
+```
+```{r wrangling}
+
+current_mandates <- state_mandates %>%
+  filter(
+    DateExpiry >= 20210326 & StateWide == 1 & Mandate ==1
+  )%>%
+  select(StatePostal,StateName, StatePolicy) %>%
+  group_by(StatePostal, StateName) %>%
+  summarize(
+    all_policies = paste(StatePolicy, collapse = " | ")
+    )
+
+mask_levels <- state_mandates %>%
+  select(StatePostal,StateName, PublicMaskLevel) %>%
+  group_by(StatePostal,StateName) %>%
+  summarize(
+    mask = paste(PublicMaskLevel, collapse = " ")
+  )
+
+mandates_masks <- current_mandates %>%
+  left_join(mask_levels, by = c("StatePostal"= "StatePostal", "StateName"="StateName"))
+
+cases_deaths_2 <- cases_deaths_bystate %>%
+  select(State.Territory,Total.Cases,Case.Rate.per.100000,Total.Deaths,Death.Rate.per.100000)
+
+mandates_cases <- mandates_masks %>%
+  left_join(cases_deaths_2, by = c("StateName" = "State.Territory"))
+
+vaccinations2 <- vaccinations %>%
+  select(`State/Territory/Federal Entity`, `Total Doses Delivered`, `Doses Delivered per 100K`, `Total Doses Administered by State where Administered`, `Doses Administered per 100k by State where Administered`, `People with at least One Dose by State of Residence`, `Percent of Total Pop with at least One Dose by State of Residence`, `People Fully Vaccinated by State of Residence`, `Percent of Total Pop Fully Vaccinated by State of Residence`,`Total Number of Pfizer doses adminstered`,`Total Number of Moderna doses administered`, `Total Number of Janssen doses administered`, `Total Number of doses from unknown manufacturer administered`,`Total Number of Pfizer doses delivered`,`Total Number of Moderna doses delivered`, `Total Number of Janssen doses delivered`, `Total Number of doses from unknown manufacturer delivered`, `People Fully Vaccinated Pfizer Resident`, `People Fully Vaccinated Moderna Resident`, `People Fully Vaccinated Janssen Resident`, `People Fully Vaccinated Unknown 2-dose manufacturer Resident`)
+
+vaccinations3 <- vaccinations2 %>%
+  select(`State/Territory/Federal Entity`,`Total Doses Administered by State where Administered`,`Total Number of Pfizer doses adminstered`,`Total Number of Moderna doses administered`, `Total Number of Janssen doses administered`, `Total Number of doses from unknown manufacturer administered`)
+
+vaccinations3_longer <- vaccinations3 %>%
+  pivot_longer(!`State/Territory/Federal Entity`,names_to = "vaccine", values_to = "count")%>%
+  mutate(vaccine = factor(vaccine, levels = c("Total Doses Administered by State where Administered", "Total Number of Pfizer doses adminstered", "Total Number of Moderna doses administered","Total Number of Janssen doses administered","Total Number of doses from unknown manufacturer administered")))
+
+full_data <- mandates_cases %>%
+  left_join(vaccinations2, by = c("StateName" = "State/Territory/Federal Entity"))
+```
 Column {data-width=650}
 -----------------------------------------------------------------------
 
 ### Chart A
 
 ```{r}
+by_vaccine <- ggplot(vaccinations3_longer, aes(fill=vaccine, y=count, x= vaccine)) +   
+   geom_bar(position="dodge", stat="identity")+
+   facet_wrap(~`State/Territory/Federal Entity`)+
+  theme(legend.position="top")
 
+ plot(by_vaccine)
 ```
 
 Column {data-width=350}
@@ -24,9 +89,37 @@ Column {data-width=350}
 
 ### Chart B
 
-```{r}
+```{r more-wrangling}
+url <- "https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_500k.zip"
+local_file <- basename(url)
+download.file(url, destfile = local_file)
+unzip(local_file, exdir = "states")
 
+library(sf)
+dsn <- path.expand("states")
+dsn
+list.files(dsn)
+
+states_look <- read_sf(dsn)
+
+states_look <- states_look %>%
+  select(STUSPS, geometry)
+
+data_with_map <- states_look %>%
+  left_join(full_data, by=c("STUSPS"="StatePostal"))
+
+
+test <- ggplot(data = data_with_map, aes(fill = Total.Deaths)) +
+  geom_sf(alpha = 0.5) 
+  #geom_sf_label(aes(label = STUSPS), fill = "white")
+  #ggtitle(label = "Average % Tip by NYC Borough")
+
+plot(test)
+
+
+#plot(states_look)
 ```
+
 
 ### Chart C
 

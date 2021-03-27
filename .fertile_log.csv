@@ -53,3 +53,14 @@ package:ggplot2,NA,base::library,2021-03-27T05:37:07Z
 package:RColorBrewer,NA,base::library,2021-03-27T05:37:07Z
 package:ggthemes,NA,base::library,2021-03-27T05:37:07Z
 package:plotly,NA,base::library,2021-03-27T05:37:07Z
+package:sf,NA,base::library,2021-03-27T13:33:07Z
+package:dplyr,NA,base::library,2021-03-27T13:33:07Z
+package:macleish,NA,base::library,2021-03-27T13:33:07Z
+package:leaflet,NA,base::library,2021-03-27T13:33:07Z
+package:lwgeom,NA,base::library,2021-03-27T13:33:07Z
+package:htmltools,NA,base::library,2021-03-27T13:33:07Z
+package:htmlwidgets,NA,base::library,2021-03-27T13:33:07Z
+package:ggplot2,NA,base::library,2021-03-27T13:33:07Z
+package:RColorBrewer,NA,base::library,2021-03-27T13:33:08Z
+package:ggthemes,NA,base::library,2021-03-27T13:33:08Z
+package:plotly,NA,base::library,2021-03-27T13:33:08Z
