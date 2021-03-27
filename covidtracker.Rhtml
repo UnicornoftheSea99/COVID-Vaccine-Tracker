@@ -48,6 +48,17 @@ current_mandates <- state_mandates %>%
   filter(
     DateExpiry >= 20210326 & StateWide == 1 & Mandate ==1
   )%>%
+  select(StatePostal,StateName, StatePolicy,PublicMaskLevel, DateEnacted, DateExpiry)
+state_data <- current_mandates %>%
+  left_join(cases_deaths_bystate, by = c("StateName" = "State.Territory"))
+first_plot <- ggplot(data = state_data, x = DateEnacted, y = Death.Rate.per.100000 ) + 
+  geom_line()+
+  facet_wrap(~StatePostal)
+
+current_mandates <- state_mandates %>%
+  filter(
+    DateExpiry >= 20210326 & StateWide == 1 & Mandate ==1
+  )%>%
   select(StatePostal,StateName, StatePolicy) %>%
   group_by(StatePostal, StateName) %>%
   summarize(
@@ -63,7 +74,6 @@ mask_levels <- state_mandates %>%
 
 mandates_masks <- current_mandates %>%
   left_join(mask_levels, by = c("StatePostal"= "StatePostal", "StateName"="StateName"))
-             
 
 end.rcode-->
 
