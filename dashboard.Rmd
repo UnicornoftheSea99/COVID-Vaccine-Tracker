@@ -1,5 +1,5 @@
 ---
-title: "Dashboard"
+title: "Fighting COVID in America"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -72,6 +72,26 @@ vaccinations3_longer <- vaccinations3 %>%
 full_data <- mandates_cases %>%
   left_join(vaccinations2, by = c("StateName" = "State/Territory/Federal Entity"))
 ```
+
+```{r more-wrangling}
+url <- "https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_500k.zip"
+local_file <- basename(url)
+download.file(url, destfile = local_file)
+unzip(local_file, exdir = "states")
+
+library(sf)
+dsn <- path.expand("states")
+dsn
+list.files(dsn)
+
+states_look <- read_sf(dsn)
+
+states_look <- states_look %>%
+  select(STUSPS, geometry)
+
+data_with_map <- states_look %>%
+  left_join(full_data, by=c("STUSPS"="StatePostal"))
+```
 Column {data-width=650}
 -----------------------------------------------------------------------
 
@@ -107,41 +127,17 @@ Column {data-width=350}
 
 ### Chart B
 
-```{r more-wrangling}
-url <- "https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_500k.zip"
-local_file <- basename(url)
-download.file(url, destfile = local_file)
-unzip(local_file, exdir = "states")
 
-library(sf)
-dsn <- path.expand("states")
-dsn
-list.files(dsn)
-
-states_look <- read_sf(dsn)
-
-states_look <- states_look %>%
-  select(STUSPS, geometry)
-
-data_with_map <- states_look %>%
-  left_join(full_data, by=c("STUSPS"="StatePostal"))
-
-
+```{r}
 test <- ggplot(data = data_with_map, aes(fill = Total.Deaths)) +
   geom_sf(alpha = 0.5) 
   #geom_sf_label(aes(label = STUSPS), fill = "white")
   #ggtitle(label = "Average % Tip by NYC Borough")
 
-plot(test)
+#plot(test)
 
 
 #plot(states_look)
 ```
 
-
-### Chart C
-
-```{r}
-
-```
 
