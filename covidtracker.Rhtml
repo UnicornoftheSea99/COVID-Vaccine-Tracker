@@ -15,10 +15,6 @@ Sources:
 </p>
 
 
-<!--begin.rcode fig.width=7, fig.height=6
-#plot(cars)
-end.rcode-->
-
 <!--begin.rcode
 library(tidyverse)
 library(sds192)
@@ -81,15 +77,14 @@ full_data <- mandates_cases %>%
 
 end.rcode-->
 
+
+<p> Plotting the Data </p>
 <!--begin.rcode
-first_plot <- ggplot(data = state_data, aes(x = DateEnacted, y = Death.Rate.per.100000 ))+ 
-  geom_line()
-
-plot(first_plot)
+# first_plot <- ggplot(data = state_data, aes(x = DateEnacted, y = Death.Rate.per.100000 ))+ 
+#   geom_line()
+# 
+# plot(first_plot)
 end.rcode-->
-
-
-
 
 <!--begin.rcode
 
@@ -105,9 +100,21 @@ list.files(dsn)
 
 states_look <- read_sf(dsn)
 
-#taxi_w_tip <- taxi_zone_look %>%
-  #left_join(tip_by_borough, by=c("boro_name"="Borough"))
+# data_with_map <- full_data %>%
+#   left_join(states_look, by=c("StatePostal"="STUSPS"))
 
+data_with_map <- states_look %>%
+  left_join(full_data, by=c("STUSPS"="StatePostal"))
+
+end.rcode-->
+
+<!--begin.rcode
+test <- ggplot(data = data_with_map, aes(fill = `Doses Administered per 100k by State where Administered`)) +
+  geom_sf(alpha = 0.5) +
+  geom_sf_label(aes(label = STUSPS), fill = "white")
+  #ggtitle(label = "Average % Tip by NYC Borough")
+
+plot(test)
 end.rcode-->
 
 

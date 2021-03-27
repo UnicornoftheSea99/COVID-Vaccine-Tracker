@@ -68,11 +68,6 @@
 
 <body>
 
-<<<<<<< HEAD
-=======
-<p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-
->>>>>>> ffabb65fe154a56b9bf6e6b152581bb786379557
 <p>
 Sources: 
 <ul>
@@ -81,35 +76,17 @@ Sources:
 </ul>
 </p>
 
-<<<<<<< HEAD
 
 <div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com">#plot(cars)</span>
 </pre></div>
 </div></div>
 
 <div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(tidyverse)</span>
-=======
-<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com">#summary(cars)</span>
-</pre></div>
-</div></div>
-
-<p>You can also embed plots, for example:</p>
-
-<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com">#plot(cars)</span>
-</pre></div>
-</div></div>
-
-<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(tidyverse)</span>
->>>>>>> ffabb65fe154a56b9bf6e6b152581bb786379557
 </pre></div>
 <div class="message"><pre class="knitr r">## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
 </pre></div>
 <div class="message"><pre class="knitr r">## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
-<<<<<<< HEAD
 ## ✓ tibble  3.0.6     ✓ dplyr   1.0.4
-=======
-## ✓ tibble  3.0.4     ✓ dplyr   1.0.2
->>>>>>> ffabb65fe154a56b9bf6e6b152581bb786379557
 ## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
 ## ✓ readr   1.4.0     ✓ forcats 0.5.0
 </pre></div>
@@ -133,21 +110,30 @@ Sources:
 <div class="message"><pre class="knitr r">## Linking to liblwgeom 3.0.0beta1 r16016, GEOS 3.8.1, PROJ 6.3.1
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(htmltools)</span>
+<span class="hl kwd">library</span><span class="hl std">(htmlwidgets)</span>
+<span class="hl kwd">library</span><span class="hl std">(ggplot2)</span>
 <span class="hl kwd">library</span><span class="hl std">(RColorBrewer)</span>
 <span class="hl kwd">library</span><span class="hl std">(ggthemes)</span>
-<<<<<<< HEAD
+<span class="hl kwd">library</span><span class="hl std">(plotly)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## 
+## Attaching package: 'plotly'
+</pre></div>
+<div class="message"><pre class="knitr r">## The following object is masked from 'package:ggplot2':
+## 
+##     last_plot
+</pre></div>
+<div class="message"><pre class="knitr r">## The following object is masked from 'package:stats':
+## 
+##     filter
+</pre></div>
+<div class="message"><pre class="knitr r">## The following object is masked from 'package:graphics':
+## 
+##     layout
 </pre></div>
 </div></div>
 
 <div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">vaccinations</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read_csv</span><span class="hl std">(</span><span class="hl str">&quot;covid19_vaccinations_in_the_united_states.csv&quot;</span><span class="hl std">)</span>
-=======
-
-<span class="hl std">vaccinations</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read_csv</span><span class="hl std">(</span><span class="hl str">&quot;covid19_vaccinations_in_the_united_states.csv&quot;</span><span class="hl std">)</span>
-</pre></div>
-<div class="message"><pre class="knitr r">## Checking for absolute paths...
-</pre></div>
-<div class="message"><pre class="knitr r">## Checking for paths outside project directory...
->>>>>>> ffabb65fe154a56b9bf6e6b152581bb786379557
 </pre></div>
 <div class="message"><pre class="knitr r">## 
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -169,10 +155,9 @@ Sources:
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">cases_deaths_bystate</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span>
   <span class="hl str">&quot;united_states_covid19_cases_and_deaths_by_state.csv&quot;</span><span class="hl std">)</span>
-<<<<<<< HEAD
-<span class="hl std">vaccines_delivered</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;u.s._covid19_vaccine_delivered_by_vaccine_type.csv&quot;</span><span class="hl std">)</span>
-<span class="hl std">vaccines_administered</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;u.s._covid19_vaccine_administration_by_vaccine_type.csv&quot;</span><span class="hl std">)</span>
-<span class="hl std">fully_vaccinated</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv&quot;</span><span class="hl std">)</span>
+<span class="hl com"># vaccines_delivered &lt;- read.csv(&quot;u.s._covid19_vaccine_delivered_by_vaccine_type.csv&quot;)</span>
+<span class="hl com"># vaccines_administered &lt;- read.csv(&quot;u.s._covid19_vaccine_administration_by_vaccine_type.csv&quot;)</span>
+<span class="hl com"># fully_vaccinated &lt;- read.csv(&quot;number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv&quot;)</span>
 <span class="hl std">state_mandates</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span> <span class="hl std">(</span><span class="hl str">&quot;USstatesCov19distancingpolicy.csv&quot;</span><span class="hl std">)</span>
 </pre></div>
 </div></div>
@@ -200,97 +185,52 @@ Sources:
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl std">mandates_masks</span> <span class="hl kwb">&lt;-</span> <span class="hl std">current_mandates</span> <span class="hl opt">%&gt;%</span>
   <span class="hl kwd">left_join</span><span class="hl std">(mask_levels,</span> <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;StatePostal&quot;</span><span class="hl std">=</span> <span class="hl str">&quot;StatePostal&quot;</span><span class="hl std">,</span> <span class="hl str">&quot;StateName&quot;</span><span class="hl std">=</span><span class="hl str">&quot;StateName&quot;</span><span class="hl std">))</span>
-=======
-</pre></div>
-<div class="message"><pre class="knitr r">## Checking for absolute paths...
-</pre></div>
-<div class="message"><pre class="knitr r">## Checking for paths outside project directory...
-</pre></div>
-<div class="source"><pre class="knitr r"><span class="hl std">vaccines_delivered</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;u.s._covid19_vaccine_delivered_by_vaccine_type.csv&quot;</span><span class="hl std">)</span>
-</pre></div>
-<div class="message"><pre class="knitr r">## Checking for absolute paths...
-## Checking for paths outside project directory...
-</pre></div>
-<div class="source"><pre class="knitr r"><span class="hl std">vaccines_administered</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;u.s._covid19_vaccine_administration_by_vaccine_type.csv&quot;</span><span class="hl std">)</span>
-</pre></div>
-<div class="message"><pre class="knitr r">## Checking for absolute paths...
-## Checking for paths outside project directory...
-</pre></div>
-<div class="source"><pre class="knitr r"><span class="hl std">fully_vaccinated</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv&quot;</span><span class="hl std">)</span>
-</pre></div>
-<div class="message"><pre class="knitr r">## Checking for absolute paths...
-## Checking for paths outside project directory...
-</pre></div>
-<div class="source"><pre class="knitr r"><span class="hl std">state_mandates</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span> <span class="hl std">(</span><span class="hl str">&quot;USstatesCov19distancingpolicy.csv&quot;</span><span class="hl std">)</span>
-</pre></div>
-<div class="message"><pre class="knitr r">## Checking for absolute paths...
-## Checking for paths outside project directory...
-</pre></div>
-</div></div>
 
-<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r">current_mandates &lt;- state_mandates %&gt;%
-  <span class="hl kwd">filter</span>(
-    DateExpiry &gt;= 20210326 &amp; StateWide == 1 &amp; Mandate ==1
-  )%&gt;%
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-  <span class="hl kwd">select</span>(StatePostal,StateName, StatePolicy,PublicMaskLevel, DateEnacted, DateExpiry)
-state_data &lt;- current_mandates %&gt;%
-  <span class="hl kwd">left_join</span>(cases_deaths_bystate, by = <span class="hl kwd">c</span>(<span class="hl str">&quot;StateName&quot;</span> = <span class="hl str">&quot;State.Territory&quot;</span>))
-first_plot &lt;- <span class="hl kwd">ggplot</span>(data = state_data, x = DateEnacted, y = Death.Rate.per.100000 ) + 
-  <span class="hl kwd">geom_line</span>()+
-  <span class="hl kwd">facet_wrap</span>(~StatePostal)
-=======
-  <span class="hl kwd">select</span>(StatePostal,StateName, StatePolicy) %&gt;%
-  <span class="hl kwd">group_by</span>(StatePostal, StateName) %&gt;%
-  <span class="hl kwd">summarize</span>(
-    all_policies = <span class="hl kwd">paste</span>(StatePolicy, collapse = <span class="hl str">&quot; | &quot;</span>)
-    )
+<span class="hl std">cases_deaths_2</span> <span class="hl kwb">&lt;-</span> <span class="hl std">cases_deaths_bystate</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(State.Territory,Total.Cases,Case.Rate.per.100000,Total.Deaths,Death.Rate.per.100000)</span>
 
-mask_levels &lt;- state_mandates %&gt;%
-  <span class="hl kwd">select</span>(StatePostal,StateName, PublicMaskLevel) %&gt;%
-  <span class="hl kwd">group_by</span>(StatePostal,StateName) %&gt;%
-  <span class="hl kwd">summarize</span>(
-    mask = <span class="hl kwd">paste</span>(PublicMaskLevel, collapse = <span class="hl str">&quot; &quot;</span>)
-  )
+<span class="hl std">mandates_cases</span> <span class="hl kwb">&lt;-</span> <span class="hl std">mandates_masks</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">left_join</span><span class="hl std">(cases_deaths_2,</span> <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;StateName&quot;</span> <span class="hl std">=</span> <span class="hl str">&quot;State.Territory&quot;</span><span class="hl std">))</span>
 
-mandates_masks &lt;- current_mandates %&gt;%
-  <span class="hl kwd">left_join</span>(mask_levels, by = <span class="hl kwd">c</span>(<span class="hl str">&quot;StatePostal&quot;</span>= <span class="hl str">&quot;StatePostal&quot;</span>, <span class="hl str">&quot;StateName&quot;</span>=<span class="hl str">&quot;StateName&quot;</span>))
-             
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; 69c0a816a7b10d30568043b29892ec64db381691
-</pre></div>
-<div class="error"><pre class="knitr r">## Error: &lt;text&gt;:5:1: unexpected input
-## 4:   )%&gt;%
-## 5: &lt;&lt;
-##    ^
->>>>>>> ffabb65fe154a56b9bf6e6b152581bb786379557
+<span class="hl std">vaccinations2</span> <span class="hl kwb">&lt;-</span> <span class="hl std">vaccinations</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(`State/Territory/Federal Entity`, `Total Doses Delivered`, `Doses Delivered per 100K`, `Total Doses Administered by State where Administered`, `Doses Administered per 100k by State where Administered`, `People with at least One Dose by State of Residence`, `Percent of Total Pop with at least One Dose by State of Residence`, `People Fully Vaccinated by State of Residence`, `Percent of Total Pop Fully Vaccinated by State of Residence`,`Total Number of Pfizer doses adminstered`,`Total Number of Moderna doses administered`, `Total Number of Janssen doses administered`, `Total Number of doses from unknown manufacturer administered`,`Total Number of Pfizer doses delivered`,`Total Number of Moderna doses delivered`, `Total Number of Janssen doses delivered`, `Total Number of doses from unknown manufacturer delivered`, `People Fully Vaccinated Pfizer Resident`, `People Fully Vaccinated Moderna Resident`, `People Fully Vaccinated Janssen Resident`, `People Fully Vaccinated Unknown 2-dose manufacturer Resident`)</span>
+
+<span class="hl std">full_data</span> <span class="hl kwb">&lt;-</span> <span class="hl std">mandates_cases</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">left_join</span><span class="hl std">(vaccinations2,</span> <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;StateName&quot;</span> <span class="hl std">=</span> <span class="hl str">&quot;State/Territory/Federal Entity&quot;</span><span class="hl std">))</span>
 </pre></div>
 </div></div>
 
 
-<p> Reference Code  </p>
-<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com">#taxi_zones2 &lt;- read_csv(&quot;taxi+_zone_lookup.csv&quot;)</span>
+<p> Plotting the Data </p>
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com"># first_plot &lt;- ggplot(data = state_data, aes(x = DateEnacted, y = Death.Rate.per.100000 ))+ </span>
+<span class="hl com">#   geom_line()</span>
+<span class="hl com"># </span>
+<span class="hl com"># plot(first_plot)</span>
+</pre></div>
+</div></div>
 
-<span class="hl com">#payments_join &lt;- payment %&gt;%</span>
-  <span class="hl com">#inner_join(taxi_zones2, by=c(&quot;PULocationID&quot; = &quot;LocationID&quot;))</span>
+<div class="chunk" id="unnamed-chunk-6"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">url</span> <span class="hl kwb">&lt;-</span> <span class="hl str">&quot;https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_500k.zip&quot;</span>
+<span class="hl std">local_file</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">basename</span><span class="hl std">(url)</span>
+<span class="hl kwd">download.file</span><span class="hl std">(url,</span> <span class="hl kwc">destfile</span> <span class="hl std">= local_file)</span>
+<span class="hl kwd">unzip</span><span class="hl std">(local_file,</span> <span class="hl kwc">exdir</span> <span class="hl std">=</span> <span class="hl str">&quot;states&quot;</span><span class="hl std">)</span>
 
-<span class="hl com">#tip_by_borough &lt;- payments_join %&gt;%</span>
- <span class="hl com"># group_by(Borough)%&gt;%</span>
- <span class="hl com"># summarize(</span>
- <span class="hl com">#   N = n(),</span>
- <span class="hl com">#   average = mean(tip_percent)</span>
- <span class="hl com"># )</span>
-
-<span class="hl com">#url &lt;- &quot;https://data.cityofnewyork.us/api/geospatial/tqmj-j8zm?method=export&amp;format=Shapefile&quot;</span>
-<span class="hl com">#local_file &lt;- basename(url)</span>
-<span class="hl com">#download.file(url, destfile = local_file)</span>
-<span class="hl com">#unzip(local_file, exdir = &quot;taxi_zone_bounds2&quot;)</span>
-
-<span class="hl com">#library(sf)</span>
-<span class="hl com">#dsn2 &lt;- path.expand(&quot;taxi_zone_bounds2&quot;)</span>
-<span class="hl com">#dsn2</span>
-<span class="hl com">#list.files(dsn2)</span>
-
-<span class="hl com">#taxi_zone_look &lt;- read_sf(dsn2)</span>
+<span class="hl kwd">library</span><span class="hl std">(sf)</span>
+<span class="hl std">dsn</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">path.expand</span><span class="hl std">(</span><span class="hl str">&quot;states&quot;</span><span class="hl std">)</span>
+<span class="hl std">dsn</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;states&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">list.files</span><span class="hl std">(dsn)</span>
+</pre></div>
+<div class="output"><pre class="knitr r">## [1] &quot;cb_2018_us_state_500k.cpg&quot;           
+## [2] &quot;cb_2018_us_state_500k.dbf&quot;           
+## [3] &quot;cb_2018_us_state_500k.prj&quot;           
+## [4] &quot;cb_2018_us_state_500k.shp&quot;           
+## [5] &quot;cb_2018_us_state_500k.shp.ea.iso.xml&quot;
+## [6] &quot;cb_2018_us_state_500k.shp.iso.xml&quot;   
+## [7] &quot;cb_2018_us_state_500k.shx&quot;
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">states_look</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read_sf</span><span class="hl std">(dsn)</span>
 
 <span class="hl com">#taxi_w_tip &lt;- taxi_zone_look %&gt;%</span>
   <span class="hl com">#left_join(tip_by_borough, by=c(&quot;boro_name&quot;=&quot;Borough&quot;))</span>
