@@ -33,28 +33,19 @@ library(ggplot2)
 library(RColorBrewer)
 library(ggthemes)
 library(plotly)
-
 end.rcode-->
 
 <!--begin.rcode
 vaccinations <- read_csv("covid19_vaccinations_in_the_united_states.csv")
 cases_deaths_bystate <- read.csv(
   "united_states_covid19_cases_and_deaths_by_state.csv")
-vaccines_delivered <- read.csv("u.s._covid19_vaccine_delivered_by_vaccine_type.csv")
-vaccines_administered <- read.csv("u.s._covid19_vaccine_administration_by_vaccine_type.csv")
-fully_vaccinated <- read.csv("number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv")
+# vaccines_delivered <- read.csv("u.s._covid19_vaccine_delivered_by_vaccine_type.csv")
+# vaccines_administered <- read.csv("u.s._covid19_vaccine_administration_by_vaccine_type.csv")
+# fully_vaccinated <- read.csv("number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv")
 state_mandates <- read.csv ("USstatesCov19distancingpolicy.csv")
 end.rcode-->
 
 <!--begin.rcode
-current_mandates <- state_mandates %>%
-  filter(
-    DateExpiry >= 20210326 & StateWide == 1 & Mandate ==1
-  )%>%
-  select(StatePostal,StateName, StatePolicy,PublicMaskLevel, DateEnacted, DateExpiry)
-
-state_data <- current_mandates %>%
-  left_join(cases_deaths_bystate, by = c("StateName" = "State.Territory"))
 
 current_mandates <- state_mandates %>%
   filter(
@@ -76,8 +67,17 @@ mask_levels <- state_mandates %>%
 mandates_masks <- current_mandates %>%
   left_join(mask_levels, by = c("StatePostal"= "StatePostal", "StateName"="StateName"))
 
-full_data <- mandates_masks %>%
-  left_join(vaccinations, by = c("StateName" = "State/Territory/Federal Entity"))
+cases_deaths_2 <- cases_deaths_bystate %>%
+  select(State.Territory,Total.Cases,Case.Rate.per.100000,Total.Deaths,Death.Rate.per.100000)
+
+mandates_cases <- mandates_masks %>%
+  left_join(cases_deaths_2, by = c("StateName" = "State.Territory"))
+
+vaccinations2 <- vaccinations %>%
+  select(`State/Territory/Federal Entity`, `Total Doses Delivered`, `Doses Delivered per 100K`, `Total Doses Administered by State where Administered`, `Doses Administered per 100k by State where Administered`, `People with at least One Dose by State of Residence`, `Percent of Total Pop with at least One Dose by State of Residence`, `People Fully Vaccinated by State of Residence`, `Percent of Total Pop Fully Vaccinated by State of Residence`,`Total Number of Pfizer doses adminstered`,`Total Number of Moderna doses administered`, `Total Number of Janssen doses administered`, `Total Number of doses from unknown manufacturer administered`,`Total Number of Pfizer doses delivered`,`Total Number of Moderna doses delivered`, `Total Number of Janssen doses delivered`, `Total Number of doses from unknown manufacturer delivered`, `People Fully Vaccinated Pfizer Resident`, `People Fully Vaccinated Moderna Resident`, `People Fully Vaccinated Janssen Resident`, `People Fully Vaccinated Unknown 2-dose manufacturer Resident`)
+
+full_data <- mandates_cases %>%
+  left_join(vaccinations2, by = c("StateName" = "State/Territory/Federal Entity"))
 
 end.rcode-->
 
