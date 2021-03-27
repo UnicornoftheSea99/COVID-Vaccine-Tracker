@@ -8,6 +8,14 @@
 
 <p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
 
+<p>
+Sources: 
+<ul>
+<li>https://github.com/COVID19StatePolicy/SocialDistancing</li>
+<li>https://covid.cdc.gov/covid-data-tracker/#vaccinations</li>
+</ul>
+</p>
+
 <!--begin.rcode
 #summary(cars)
 end.rcode-->
@@ -35,9 +43,19 @@ cases_deaths_bystate <- read.csv(
 vaccines_delivered <- read.csv("u.s._covid19_vaccine_delivered_by_vaccine_type.csv")
 vaccines_administered <- read.csv("u.s._covid19_vaccine_administration_by_vaccine_type.csv")
 fully_vaccinated <- read.csv("number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv")
-
+state_mandates <- read.csv ("USstatesCov19distancingpolicy.csv")
 
 end.rcode-->
+
+<!--begin.rcode
+current_mandates <- state_mandates %>%
+  filter(
+    DateExpiry >= 20210326 & StateWide == 1 & Mandate ==1
+  )%>%
+  select(StatePostal,StateName, StatePolicy,PublicMaskLevel, DateEnacted, DateExpiry)
+
+end.rcode-->
+
 
 <p> Reference Code  </p>
 <!--begin.rcode
