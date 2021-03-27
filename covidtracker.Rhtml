@@ -30,6 +30,7 @@ end.rcode-->
 library(tidyverse)
 library(sds192)
 library(sf)
+library(dplyr)
 library(macleish)
 library(leaflet)
 library(lwgeom)
@@ -58,6 +59,26 @@ state_data <- current_mandates %>%
 first_plot <- ggplot(data = state_data, x = DateEnacted, y = Death.Rate.per.100000 ) + 
   geom_line()+
   facet_wrap(~StatePostal)
+
+current_mandates <- state_mandates %>%
+  filter(
+    DateExpiry >= 20210326 & StateWide == 1 & Mandate ==1
+  )%>%
+  select(StatePostal,StateName, StatePolicy) %>%
+  group_by(StatePostal, StateName) %>%
+  summarize(
+    all_policies = paste(StatePolicy, collapse = " | ")
+    )
+
+mask_levels <- state_mandates %>%
+  select(StatePostal,StateName, PublicMaskLevel) %>%
+  group_by(StatePostal,StateName) %>%
+  summarize(
+    mask = paste(PublicMaskLevel, collapse = " ")
+  )
+
+mandates_masks <- current_mandates %>%
+  left_join(mask_levels, by = c("StatePostal"= "StatePostal", "StateName"="StateName"))
 
 end.rcode-->
 

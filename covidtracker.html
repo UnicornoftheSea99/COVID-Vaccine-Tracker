@@ -106,7 +106,8 @@ Sources:
 </pre></div>
 <div class="message"><pre class="knitr r">## Linking to GEOS 3.8.1, GDAL 3.1.4, PROJ 6.3.1
 </pre></div>
-<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(macleish)</span>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(dplyr)</span>
+<span class="hl kwd">library</span><span class="hl std">(macleish)</span>
 </pre></div>
 <div class="message"><pre class="knitr r">## Loading required package: etl
 </pre></div>
@@ -172,16 +173,40 @@ Sources:
 </pre></div>
 </div></div>
 
-<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">current_mandates</span> <span class="hl kwb">&lt;-</span> <span class="hl std">state_mandates</span> <span class="hl opt">%&gt;%</span>
-  <span class="hl kwd">filter</span><span class="hl std">(</span>
-    <span class="hl std">DateExpiry</span> <span class="hl opt">&gt;=</span> <span class="hl num">20210326</span> <span class="hl opt">&amp;</span> <span class="hl std">StateWide</span> <span class="hl opt">==</span> <span class="hl num">1</span> <span class="hl opt">&amp;</span> <span class="hl std">Mandate</span> <span class="hl opt">==</span><span class="hl num">1</span>
-  <span class="hl std">)</span><span class="hl opt">%&gt;%</span>
-  <span class="hl kwd">select</span><span class="hl std">(StatePostal,StateName, StatePolicy,PublicMaskLevel, DateEnacted, DateExpiry)</span>
-<span class="hl std">state_data</span> <span class="hl kwb">&lt;-</span> <span class="hl std">current_mandates</span> <span class="hl opt">%&gt;%</span>
-  <span class="hl kwd">left_join</span><span class="hl std">(cases_deaths_bystate,</span> <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;StateName&quot;</span> <span class="hl std">=</span> <span class="hl str">&quot;State.Territory&quot;</span><span class="hl std">))</span>
-<span class="hl std">first_plot</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">= state_data,</span> <span class="hl kwc">x</span> <span class="hl std">= DateEnacted,</span> <span class="hl kwc">y</span> <span class="hl std">= Death.Rate.per.100000 )</span> <span class="hl opt">+</span>
-  <span class="hl kwd">geom_line</span><span class="hl std">()</span><span class="hl opt">+</span>
-  <span class="hl kwd">facet_wrap</span><span class="hl std">(</span><span class="hl opt">~</span><span class="hl std">StatePolicy)</span>
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r">current_mandates &lt;- state_mandates %&gt;%
+  <span class="hl kwd">filter</span>(
+    DateExpiry &gt;= 20210326 &amp; StateWide == 1 &amp; Mandate ==1
+  )%&gt;%
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+  <span class="hl kwd">select</span>(StatePostal,StateName, StatePolicy,PublicMaskLevel, DateEnacted, DateExpiry)
+state_data &lt;- current_mandates %&gt;%
+  <span class="hl kwd">left_join</span>(cases_deaths_bystate, by = <span class="hl kwd">c</span>(<span class="hl str">&quot;StateName&quot;</span> = <span class="hl str">&quot;State.Territory&quot;</span>))
+first_plot &lt;- <span class="hl kwd">ggplot</span>(data = state_data, x = DateEnacted, y = Death.Rate.per.100000 ) + 
+  <span class="hl kwd">geom_line</span>()+
+  <span class="hl kwd">facet_wrap</span>(~StatePostal)
+=======
+  <span class="hl kwd">select</span>(StatePostal,StateName, StatePolicy) %&gt;%
+  <span class="hl kwd">group_by</span>(StatePostal, StateName) %&gt;%
+  <span class="hl kwd">summarize</span>(
+    all_policies = <span class="hl kwd">paste</span>(StatePolicy, collapse = <span class="hl str">&quot; | &quot;</span>)
+    )
+
+mask_levels &lt;- state_mandates %&gt;%
+  <span class="hl kwd">select</span>(StatePostal,StateName, PublicMaskLevel) %&gt;%
+  <span class="hl kwd">group_by</span>(StatePostal,StateName) %&gt;%
+  <span class="hl kwd">summarize</span>(
+    mask = <span class="hl kwd">paste</span>(PublicMaskLevel, collapse = <span class="hl str">&quot; &quot;</span>)
+  )
+
+mandates_masks &lt;- current_mandates %&gt;%
+  <span class="hl kwd">left_join</span>(mask_levels, by = <span class="hl kwd">c</span>(<span class="hl str">&quot;StatePostal&quot;</span>= <span class="hl str">&quot;StatePostal&quot;</span>, <span class="hl str">&quot;StateName&quot;</span>=<span class="hl str">&quot;StateName&quot;</span>))
+             
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 69c0a816a7b10d30568043b29892ec64db381691
+</pre></div>
+<div class="error"><pre class="knitr r">## Error: &lt;text&gt;:5:1: unexpected input
+## 4:   )%&gt;%
+## 5: &lt;&lt;
+##    ^
 </pre></div>
 </div></div>
 

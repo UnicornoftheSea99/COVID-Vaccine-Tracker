@@ -26,3 +26,17 @@ u.s._covid19_vaccine_delivered_by_vaccine_type.csv,/Users/mariemsnoussi/Desktop/
 u.s._covid19_vaccine_administration_by_vaccine_type.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/u.s._covid19_vaccine_administration_by_vaccine_type.csv,utils::read.csv,2021-03-27T03:53:19Z
 number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv,utils::read.csv,2021-03-27T03:53:19Z
 USstatesCov19distancingpolicy.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/USstatesCov19distancingpolicy.csv,utils::read.csv,2021-03-27T03:53:19Z
+package:sf,NA,base::library,2021-03-27T03:55:25Z
+package:dplyr,NA,base::library,2021-03-27T03:55:25Z
+package:macleish,NA,base::library,2021-03-27T03:55:25Z
+package:leaflet,NA,base::library,2021-03-27T03:55:25Z
+package:lwgeom,NA,base::library,2021-03-27T03:55:25Z
+package:htmltools,NA,base::library,2021-03-27T03:55:25Z
+package:RColorBrewer,NA,base::library,2021-03-27T03:55:25Z
+package:ggthemes,NA,base::library,2021-03-27T03:55:25Z
+covid19_vaccinations_in_the_united_states.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/covid19_vaccinations_in_the_united_states.csv,readr::read_csv,2021-03-27T03:55:25Z
+united_states_covid19_cases_and_deaths_by_state.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/united_states_covid19_cases_and_deaths_by_state.csv,utils::read.csv,2021-03-27T03:55:26Z
+u.s._covid19_vaccine_delivered_by_vaccine_type.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/u.s._covid19_vaccine_delivered_by_vaccine_type.csv,utils::read.csv,2021-03-27T03:55:26Z
+u.s._covid19_vaccine_administration_by_vaccine_type.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/u.s._covid19_vaccine_administration_by_vaccine_type.csv,utils::read.csv,2021-03-27T03:55:26Z
+number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv,utils::read.csv,2021-03-27T03:55:26Z
+USstatesCov19distancingpolicy.csv,/Users/mariemsnoussi/Desktop/SDS192/Projects/COVID-Vaccine-Tracker/USstatesCov19distancingpolicy.csv,utils::read.csv,2021-03-27T03:55:26Z
