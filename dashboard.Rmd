@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Dashboard"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -21,6 +21,7 @@ library(ggplot2)
 library(RColorBrewer)
 library(ggthemes)
 library(plotly)
+library(shiny)
 ```
 
 ```{r data-extraction}
@@ -82,6 +83,21 @@ by_vaccine <- ggplot(vaccinations3_longer, aes(fill=vaccine, y=count, x= vaccine
   theme(legend.position="top")
 
  plot(by_vaccine)
+ 
+ # using shiny
+ ui <- fluidPage(
+  selectInput("id", "Pick a state", choices = setNames(vaccinations3_longer$`State/Territory/Federal Entity`)),
+  plotOutput("plot", width = 250, height = 250)
+)
+ server <- function(input, output, session) {
+  output$plot <- renderPlot({
+    ggplot(vaccinations3_longer, aes(fill=vaccine, y=count, x= vaccine)) +   
+   geom_bar(position="dodge", stat="identity")+
+   facet_wrap(~ .`State/Territory/Federal Entity`, scale = "free_y")+
+   theme(legend.position="top") +
+  theme_economist()
+  }, res = 96)
+ }
 ```
 
 Column {data-width=350}
