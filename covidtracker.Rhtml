@@ -76,15 +76,19 @@ mask_levels <- state_mandates %>%
 mandates_masks <- current_mandates %>%
   left_join(mask_levels, by = c("StatePostal"= "StatePostal", "StateName"="StateName"))
 
+full_data <- mandates_masks %>%
+  left_join(vaccinations, by = c("StateName" = "State/Territory/Federal Entity"))
+
 end.rcode-->
 
 <!--begin.rcode
 first_plot <- ggplot(data = state_data, aes(x = DateEnacted, y = Death.Rate.per.100000 ))+ 
-  geom_line()+
-  facet_wrap(~StatePostal)
+  geom_line()
 
 plot(first_plot)
 end.rcode-->
+
+
 
 
 <!--begin.rcode
