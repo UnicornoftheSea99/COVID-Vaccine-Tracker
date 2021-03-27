@@ -30,6 +30,7 @@ cases_deaths_bystate <- read.csv(
   "united_states_covid19_cases_and_deaths_by_state.csv")
 state_mandates <- read.csv ("USstatesCov19distancingpolicy.csv")
 ```
+
 ```{r wrangling}
 
 current_mandates <- state_mandates %>%
@@ -86,14 +87,15 @@ by_vaccine <- ggplot(vaccinations3_longer, aes(fill=vaccine, y=count, x= vaccine
  
  # using shiny
  ui <- fluidPage(
-  selectInput("id", "Pick a state", choices = setNames(vaccinations3_longer$`State/Territory/Federal Entity`)),
+  selectInput("id", "Pick a state", c("All", unique(as.character(vaccinations3_longer$`State/Territory/Federal Entity`)))),
+#choices = setNames(vaccinations3_longer$`State/Territory/Federal Entity`)),
   plotOutput("plot", width = 250, height = 250)
 )
  server <- function(input, output, session) {
   output$plot <- renderPlot({
     ggplot(vaccinations3_longer, aes(fill=vaccine, y=count, x= vaccine)) +   
    geom_bar(position="dodge", stat="identity")+
-   facet_wrap(~ .`State/Territory/Federal Entity`, scale = "free_y")+
+   facet_wrap(~`State/Territory/Federal Entity`, scale = "free_y")+
    theme(legend.position="top") +
   theme_economist()
   }, res = 96)
