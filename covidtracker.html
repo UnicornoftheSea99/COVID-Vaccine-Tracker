@@ -1,0 +1,221 @@
+<html>
+
+<head>
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>COVID-19 Vaccine Tracker</title>
+</head>
+
+<body>
+
+<p>This is an R HTML document. When you click the <b>Knit HTML</b> button a web page will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+
+<p>
+Sources: 
+<ul>
+<li>https://github.com/COVID19StatePolicy/SocialDistancing</li>
+<li>https://covid.cdc.gov/covid-data-tracker/#vaccinations</li>
+</ul>
+</p>
+
+<div class="chunk" id="unnamed-chunk-1"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com">#summary(cars)</span>
+</pre></div>
+</div></div>
+
+<p>You can also embed plots, for example:</p>
+
+<div class="chunk" id="unnamed-chunk-2"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com">#plot(cars)</span>
+</pre></div>
+</div></div>
+
+<div class="chunk" id="unnamed-chunk-3"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(tidyverse)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
+</pre></div>
+<div class="message"><pre class="knitr r">## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
+## ✓ tibble  3.0.4     ✓ dplyr   1.0.2
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.4.0     ✓ forcats 0.5.0
+</pre></div>
+<div class="message"><pre class="knitr r">## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(sds192)</span>
+<span class="hl kwd">library</span><span class="hl std">(sf)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Linking to GEOS 3.8.1, GDAL 3.1.4, PROJ 6.3.1
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(macleish)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Loading required package: etl
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(leaflet)</span>
+<span class="hl kwd">library</span><span class="hl std">(lwgeom)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Linking to liblwgeom 3.0.0beta1 r16016, GEOS 3.8.1, PROJ 6.3.1
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl kwd">library</span><span class="hl std">(htmltools)</span>
+<span class="hl kwd">library</span><span class="hl std">(RColorBrewer)</span>
+<span class="hl kwd">library</span><span class="hl std">(ggthemes)</span>
+
+<span class="hl std">vaccinations</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read_csv</span><span class="hl std">(</span><span class="hl str">&quot;covid19_vaccinations_in_the_united_states.csv&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Checking for absolute paths...
+</pre></div>
+<div class="message"><pre class="knitr r">## Checking for paths outside project directory...
+</pre></div>
+<div class="message"><pre class="knitr r">## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   .default = col_double(),
+##   `State/Territory/Federal Entity` = col_character(),
+##   `Doses Delivered per 100K` = col_character(),
+##   `18+ Doses Delivered per 100K` = col_character(),
+##   `Doses Administered per 100k by State where Administered` = col_character(),
+##   `18+ Doses Administered per 100K by State where Administered` = col_character(),
+##   `Percent of Total Pop with at least One Dose by State of Residence` = col_character(),
+##   `Percent of 18+ Pop with at least One Dose by State of Residence` = col_character(),
+##   `Percent of Total Pop Fully Vaccinated by State of Residence` = col_character(),
+##   `Percent of 18+ Pop Fully Vaccinated by State of Residence` = col_character(),
+##   `Percent of Total Pop with 1+ Doses by State of Residence` = col_character(),
+##   `Percent of 18+ Pop with 1+ Doses by State of Residence` = col_character()
+## )
+## ℹ Use `spec()` for the full column specifications.
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">cases_deaths_bystate</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span>
+  <span class="hl str">&quot;united_states_covid19_cases_and_deaths_by_state.csv&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Checking for absolute paths...
+</pre></div>
+<div class="message"><pre class="knitr r">## Checking for paths outside project directory...
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">vaccines_delivered</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;u.s._covid19_vaccine_delivered_by_vaccine_type.csv&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Checking for absolute paths...
+## Checking for paths outside project directory...
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">vaccines_administered</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;u.s._covid19_vaccine_administration_by_vaccine_type.csv&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Checking for absolute paths...
+## Checking for paths outside project directory...
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">fully_vaccinated</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span><span class="hl std">(</span><span class="hl str">&quot;number_of_people_fully_vaccinated_in_the_u.s.in_the_u.s._by_covid19_vaccine_series_type.csv&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Checking for absolute paths...
+## Checking for paths outside project directory...
+</pre></div>
+<div class="source"><pre class="knitr r"><span class="hl std">state_mandates</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">read.csv</span> <span class="hl std">(</span><span class="hl str">&quot;USstatesCov19distancingpolicy.csv&quot;</span><span class="hl std">)</span>
+</pre></div>
+<div class="message"><pre class="knitr r">## Checking for absolute paths...
+## Checking for paths outside project directory...
+</pre></div>
+</div></div>
+
+<div class="chunk" id="unnamed-chunk-4"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl std">current_mandates</span> <span class="hl kwb">&lt;-</span> <span class="hl std">state_mandates</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">filter</span><span class="hl std">(</span>
+    <span class="hl std">DateExpiry</span> <span class="hl opt">&gt;=</span> <span class="hl num">20210326</span> <span class="hl opt">&amp;</span> <span class="hl std">StateWide</span> <span class="hl opt">==</span> <span class="hl num">1</span> <span class="hl opt">&amp;</span> <span class="hl std">Mandate</span> <span class="hl opt">==</span><span class="hl num">1</span>
+  <span class="hl std">)</span><span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">select</span><span class="hl std">(StatePostal,StateName, StatePolicy,PublicMaskLevel, DateEnacted, DateExpiry)</span>
+<span class="hl std">state_data</span> <span class="hl kwb">&lt;-</span> <span class="hl std">current_mandates</span> <span class="hl opt">%&gt;%</span>
+  <span class="hl kwd">left_join</span><span class="hl std">(cases_deaths_bystate,</span> <span class="hl kwc">by</span> <span class="hl std">=</span> <span class="hl kwd">c</span><span class="hl std">(</span><span class="hl str">&quot;StateName&quot;</span> <span class="hl std">=</span> <span class="hl str">&quot;State.Territory&quot;</span><span class="hl std">))</span>
+<span class="hl std">first_plot</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ggplot</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">= state_data,</span> <span class="hl kwc">x</span> <span class="hl std">= DateEnacted,</span> <span class="hl kwc">y</span> <span class="hl std">= Death.Rate.per.100000 )</span> <span class="hl opt">+</span>
+  <span class="hl kwd">geom_line</span><span class="hl std">()</span><span class="hl opt">+</span>
+  <span class="hl kwd">facet_wrap</span><span class="hl std">(</span><span class="hl opt">~</span><span class="hl std">StatePolicy)</span>
+</pre></div>
+</div></div>
+
+
+<p> Reference Code  </p>
+<div class="chunk" id="unnamed-chunk-5"><div class="rcode"><div class="source"><pre class="knitr r"><span class="hl com">#taxi_zones2 &lt;- read_csv(&quot;taxi+_zone_lookup.csv&quot;)</span>
+
+<span class="hl com">#payments_join &lt;- payment %&gt;%</span>
+  <span class="hl com">#inner_join(taxi_zones2, by=c(&quot;PULocationID&quot; = &quot;LocationID&quot;))</span>
+
+<span class="hl com">#tip_by_borough &lt;- payments_join %&gt;%</span>
+ <span class="hl com"># group_by(Borough)%&gt;%</span>
+ <span class="hl com"># summarize(</span>
+ <span class="hl com">#   N = n(),</span>
+ <span class="hl com">#   average = mean(tip_percent)</span>
+ <span class="hl com"># )</span>
+
+<span class="hl com">#url &lt;- &quot;https://data.cityofnewyork.us/api/geospatial/tqmj-j8zm?method=export&amp;format=Shapefile&quot;</span>
+<span class="hl com">#local_file &lt;- basename(url)</span>
+<span class="hl com">#download.file(url, destfile = local_file)</span>
+<span class="hl com">#unzip(local_file, exdir = &quot;taxi_zone_bounds2&quot;)</span>
+
+<span class="hl com">#library(sf)</span>
+<span class="hl com">#dsn2 &lt;- path.expand(&quot;taxi_zone_bounds2&quot;)</span>
+<span class="hl com">#dsn2</span>
+<span class="hl com">#list.files(dsn2)</span>
+
+<span class="hl com">#taxi_zone_look &lt;- read_sf(dsn2)</span>
+
+<span class="hl com">#taxi_w_tip &lt;- taxi_zone_look %&gt;%</span>
+  <span class="hl com">#left_join(tip_by_borough, by=c(&quot;boro_name&quot;=&quot;Borough&quot;))</span>
+</pre></div>
+</div></div>
+
+
+</body>
+</html>

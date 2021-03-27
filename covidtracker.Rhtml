@@ -53,6 +53,11 @@ current_mandates <- state_mandates %>%
     DateExpiry >= 20210326 & StateWide == 1 & Mandate ==1
   )%>%
   select(StatePostal,StateName, StatePolicy,PublicMaskLevel, DateEnacted, DateExpiry)
+state_data <- current_mandates %>%
+  left_join(cases_deaths_bystate, by = c("StateName" = "State.Territory"))
+first_plot <- ggplot(data = state_data, x = DateEnacted, y = Death.Rate.per.100000 ) + 
+  geom_line()+
+  facet_wrap(~StatePostal)
 
 end.rcode-->
 
