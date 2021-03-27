@@ -109,7 +109,7 @@ data_with_map <- states_look %>%
 end.rcode-->
 
 <!--begin.rcode
-test <- ggplot(data = data_with_map, aes(fill = `Doses Administered per 100k by State where Administered`)) +
+test <- ggplot(data = data_with_map, aes(fill = Total.Cases)) +
   geom_sf(alpha = 0.5) +
   geom_sf_label(aes(label = STUSPS), fill = "white")
   #ggtitle(label = "Average % Tip by NYC Borough")
